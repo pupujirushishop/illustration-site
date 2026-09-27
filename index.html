@@ -3,12 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>My Illustration</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #eaf8fc;
+      color: #52636a;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        sans-serif;
+    }
+
+    header {
+      background: #fffdf5;
+      padding: 28px 20px;
+      text-align: center;
+      border-bottom: 4px solid #fff0a8;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #63b9cf;
+      font-size: 30px;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #8a9da3;
+      font-size: 14px;
+    }
+
+    nav {
+      margin-top: 20px;
+    }
+
+    nav a {
+      display: inline-block;
+      margin: 5px 6px;
+      padding: 8px 16px;
+      background: #ffffff;
+      color: #63aebf;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 13px;
+      box-shadow: 0 3px 10px rgba(80, 170, 190, 0.12);
+    }
+
+    nav a:hover {
+      background: #fff3a8;
+      color: #65736f;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 50px 20px;
+    }
+
+    .welcome {
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 50px 25px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(70, 160, 180, 0.12);
+      border: 3px solid #d8f4fa;
+    }
+
+    .welcome h2 {
+      margin-top: 0;
+      color: #62b6cc;
+      font-size: 25px;
+    }
+
+    .welcome p {
+      line-height: 2;
+      color: #718187;
+    }
+
+    .decoration {
+      font-size: 30px;
+      letter-spacing: 10px;
+      margin-bottom: 15px;
+    }
+
+    .gallery-title {
+      margin-top: 60px;
+      text-align: center;
+      color: #e4bd43;
+      font-size: 24px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      background: #fffdf5;
+      border-radius: 22px;
+      border: 3px solid #fff0a8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b5a96b;
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 30px 20px;
+      text-align: center;
+      background: #fffdf5;
+      color: #91a0a4;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      main {
+        padding: 30px 15px;
+      }
+
+      .welcome {
+        padding: 35px 20px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <h1>My Illustration</h1>
-  <p>イラスト作品を掲載しています。</p>
+  <header>
+    <h1>My Illustration</h1>
+    <p>Illustration &amp; Art</p>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#blog">Blog</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="welcome" id="home">
+      <div class="decoration">☁️ ✦ ☁️</div>
+
+      <h2>Welcome to my world</h2>
+
+      <p>
+        ここにあなたのイラストや作品を<br>
+        少しずつ紹介していきます。
+      </p>
+    </section>
+
+    <h2 class="gallery-title" id="gallery">
+      Gallery
+    </h2>
+
+    <section class="gallery">
+      <div class="gallery-item">Illustration 01</div>
+      <div class="gallery-item">Illustration 02</div>
+      <div class="gallery-item">Illustration 03</div>
+      <div class="gallery-item">Illustration 04</div>
+      <div class="gallery-item">Illustration 05</div>
+      <div class="gallery-item">Illustration 06</div>
+    </section>
+
+  </main>
+
+  <footer>
+    © My Illustration
+  </footer>
 
 </body>
 </html>
