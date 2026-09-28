@@ -151,6 +151,28 @@
   object-fit: cover;
   border-radius: 19px;
     }
+/* 拡大表示 */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(40, 60, 65, 0.85);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.image-modal img {
+  max-width: 95%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
   </style>
 </head>
 
@@ -187,7 +209,7 @@
 
     <section class="gallery">
       <div class="gallery-item">
-  <img src="20260817.png" alt="イラスト作品">
+  <img src="20260817.png" alt="イラスト作品" onclick="openImage(this)">
 </div>
       <div class="gallery-item">Illustration 02</div>
       <div class="gallery-item">Illustration 03</div>
@@ -198,9 +220,27 @@
 
   </main>
 
-  <footer>
-    © My Illustration
-  </footer>
+<footer>
+  © My Illustration
+</footer>
+
+<div class="image-modal" id="imageModal" onclick="closeImage()">
+  <img id="modalImage" src="" alt="拡大表示">
+</div>
+
+<script>
+  function openImage(image) {
+    const modal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+
+    modalImage.src = image.src;
+    modal.style.display = "flex";
+  }
+
+  function closeImage() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+</script>
 
 </body>
 </html>
