@@ -170,12 +170,15 @@
     }
 
     .image-modal img {
-      max-width: 95%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      touch-action: pan-y;
+  max-width: 95%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
     }
   </style>
 </head>
@@ -251,100 +254,116 @@
 
   <script>
 
-    // ギャラリーの画像一覧
-    const images = [
-      "20260817.png",
-      "イラスト02.png",
-      "イラスト03.png",
-      "イラスト04.png",
-      "イラスト05.png",
-      "イラスト06.png"
-    ];
+  // ギャラリーの画像一覧
+  const images = [
+    "20260817.png",
+    "イラスト02.png",
+    "イラスト03.png",
+    "イラスト04.png",
+    "イラスト05.png",
+    "イラスト06.png"
+  ];
 
-    // 現在表示している画像
-    let currentIndex = 0;
+  // 現在の画像番号
+  let currentIndex = 0;
 
-    // スワイプ開始位置
-    let startX = 0;
-    let startY = 0;
+  // スワイプ開始位置
+  let startX = 0;
+  let startY = 0;
 
-    // 画像を開く
-    function openImage(index) {
-      currentIndex = index;
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
 
-      const modal = document.getElementById("imageModal");
-      const modalImage = document.getElementById("modalImage");
 
-      modalImage.src = images[currentIndex];
-      modal.style.display = "flex";
-    }
+  // 画像を開く
+  function openImage(index) {
 
-    // 画像を閉じる
-    function closeImage() {
-      document.getElementById("imageModal").style.display = "none";
-    }
+    currentIndex = index;
 
-    // モーダルをタップしたら閉じる
-    document.getElementById("imageModal").addEventListener("click", function(event) {
+    modalImage.src = images[currentIndex];
 
-      // 画像そのものをタップした場合は閉じない
-      if (event.target.id === "modalImage") {
-        return;
-      }
+    modal.style.display = "flex";
+  }
 
+
+  // 画像を閉じる
+  function closeImage() {
+
+    modal.style.display = "none";
+  }
+
+
+  // 背景をタップしたら閉じる
+  modal.addEventListener("click", function(event) {
+
+    if (event.target === modal) {
       closeImage();
-    });
+    }
 
-    // スワイプ開始
-    document.getElementById("imageModal").addEventListener("touchstart", function(event) {
+  });
 
-      startX = event.touches[0].clientX;
-      startY = event.touches[0].clientY;
 
-    });
+  // スワイプ開始
+  modalImage.addEventListener("touchstart", function(event) {
 
-    // スワイプ終了
-    document.getElementById("imageModal").addEventListener("touchend", function(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
 
-      const endX = event.changedTouches[0].clientX;
-      const endY = event.changedTouches[0].clientY;
+  }, { passive: true });
 
-      const diffX = endX - startX;
-      const diffY = endY - startY;
 
-      // 横方向のスワイプだけ反応
-      if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+  // スワイプ終了
+  modalImage.addEventListener("touchend", function(event) {
 
-        // 左にスワイプ → 次の作品
-        if (diffX < 0) {
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
 
-          currentIndex++;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
 
-          // 最後の作品から最初へ
-          if (currentIndex >= images.length) {
-            currentIndex = 0;
-          }
 
+    // 横方向に50px以上動いたときだけスワイプ
+    if (
+      Math.abs(diffX) > 50 &&
+      Math.abs(diffX) > Math.abs(diffY)
+    ) {
+
+
+      // 左スワイプ → 次の作品
+      if (diffX < 0) {
+
+        currentIndex++;
+
+        // 最後まで行ったら最初に戻る
+        if (currentIndex >= images.length) {
+          currentIndex = 0;
         }
 
-        // 右にスワイプ → 前の作品
-        else {
-
-          currentIndex--;
-
-          // 最初の作品から最後へ
-          if (currentIndex < 0) {
-            currentIndex = images.length - 1;
-          }
-
-        }
-
-        document.getElementById("modalImage").src = images[currentIndex];
       }
 
-    });
 
-  </script>
+      // 右スワイプ → 前の作品
+      else {
+
+        currentIndex--;
+
+        // 最初から右にスワイプしたら最後へ
+        if (currentIndex < 0) {
+          currentIndex = images.length - 1;
+        }
+
+      }
+
+
+      // 次の画像を表示
+      modalImage.src = images[currentIndex];
+
+    }
+
+  }, { passive: true });
+
+
+</script>
 
 </body>
 </html>
