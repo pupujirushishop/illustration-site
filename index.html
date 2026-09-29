@@ -179,7 +179,7 @@
   user-select: none;
   -webkit-user-drag: none;
 }
-    }
+    
 .image-counter {
   position: absolute;
   bottom: 25px;
@@ -284,8 +284,9 @@
   let startX = 0;
   let startY = 0;
 
-  const modal = document.getElementById("imageModal");
-  const imageCounter = document.getElementById("imageCounter");
+ const modal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const imageCounter = document.getElementById("imageCounter");
 
 
   // 画像を開く
