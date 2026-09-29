@@ -120,6 +120,14 @@
       justify-content: center;
       color: #b5a96b;
       font-size: 14px;
+      overflow: hidden;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 19px;
     }
 
     footer {
@@ -145,34 +153,30 @@
         padding: 35px 20px;
       }
     }
-    .gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 19px;
-    }
-/* 拡大表示 */
-.image-modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(40, 60, 65, 0.85);
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
 
-.image-modal img {
-  max-width: 95%;
-  max-height: 90%;
-  object-fit: contain;
-  border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
+    /* 拡大表示 */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(40, 60, 65, 0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .image-modal img {
+      max-width: 95%;
+      max-height: 90%;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      touch-action: pan-y;
+    }
   </style>
 </head>
 
@@ -209,55 +213,138 @@
 
     <section class="gallery">
 
-  <div class="gallery-item">
-    <img src="20260817.png" alt="イラスト作品1" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="20260817.png" alt="イラスト作品1" onclick="openImage(0)">
+      </div>
 
-  <div class="gallery-item">
-    <img src="イラスト02.png" alt="イラスト作品2" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="イラスト02.png" alt="イラスト作品2" onclick="openImage(1)">
+      </div>
 
-  <div class="gallery-item">
-    <img src="イラスト03.png" alt="イラスト作品3" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="イラスト03.png" alt="イラスト作品3" onclick="openImage(2)">
+      </div>
 
-  <div class="gallery-item">
-    <img src="イラスト04.png" alt="イラスト作品4" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="イラスト04.png" alt="イラスト作品4" onclick="openImage(3)">
+      </div>
 
-  <div class="gallery-item">
-    <img src="イラスト05.png" alt="イラスト作品5" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="イラスト05.png" alt="イラスト作品5" onclick="openImage(4)">
+      </div>
 
-  <div class="gallery-item">
-    <img src="イラスト06.png" alt="イラスト作品6" onclick="openImage(this)">
-  </div>
+      <div class="gallery-item">
+        <img src="イラスト06.png" alt="イラスト作品6" onclick="openImage(5)">
+      </div>
 
-</section>
+    </section>
 
   </main>
 
-<footer>
-  © My Illustration
-</footer>
+  <footer>
+    © My Illustration
+  </footer>
 
-<div class="image-modal" id="imageModal" onclick="closeImage()">
-  <img id="modalImage" src="" alt="拡大表示">
-</div>
+  <div class="image-modal" id="imageModal">
+    <img id="modalImage" src="" alt="拡大表示">
+  </div>
 
-<script>
-  function openImage(image) {
-    const modal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
+  <script>
 
-    modalImage.src = image.src;
-    modal.style.display = "flex";
-  }
+    // ギャラリーの画像一覧
+    const images = [
+      "20260817.png",
+      "イラスト02.png",
+      "イラスト03.png",
+      "イラスト04.png",
+      "イラスト05.png",
+      "イラスト06.png"
+    ];
 
-  function closeImage() {
-    document.getElementById("imageModal").style.display = "none";
-  }
-</script>
+    // 現在表示している画像
+    let currentIndex = 0;
+
+    // スワイプ開始位置
+    let startX = 0;
+    let startY = 0;
+
+    // 画像を開く
+    function openImage(index) {
+      currentIndex = index;
+
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+
+      modalImage.src = images[currentIndex];
+      modal.style.display = "flex";
+    }
+
+    // 画像を閉じる
+    function closeImage() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    // モーダルをタップしたら閉じる
+    document.getElementById("imageModal").addEventListener("click", function(event) {
+
+      // 画像そのものをタップした場合は閉じない
+      if (event.target.id === "modalImage") {
+        return;
+      }
+
+      closeImage();
+    });
+
+    // スワイプ開始
+    document.getElementById("imageModal").addEventListener("touchstart", function(event) {
+
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+
+    });
+
+    // スワイプ終了
+    document.getElementById("imageModal").addEventListener("touchend", function(event) {
+
+      const endX = event.changedTouches[0].clientX;
+      const endY = event.changedTouches[0].clientY;
+
+      const diffX = endX - startX;
+      const diffY = endY - startY;
+
+      // 横方向のスワイプだけ反応
+      if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+
+        // 左にスワイプ → 次の作品
+        if (diffX < 0) {
+
+          currentIndex++;
+
+          // 最後の作品から最初へ
+          if (currentIndex >= images.length) {
+            currentIndex = 0;
+          }
+
+        }
+
+        // 右にスワイプ → 前の作品
+        else {
+
+          currentIndex--;
+
+          // 最初の作品から最後へ
+          if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+          }
+
+        }
+
+        document.getElementById("modalImage").src = images[currentIndex];
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>
