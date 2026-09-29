@@ -170,28 +170,30 @@
     }
 
     .image-modal img {
-  max-width: 95%;
-  max-height: 90%;
-  object-fit: contain;
-  border-radius: 15px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-  touch-action: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-    
-.image-counter {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.85);
-  color: #65736f;
-  padding: 7px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  letter-spacing: 1px;
-}
+      max-width: 95%;
+      max-height: 85%;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      touch-action: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* 作品番号 */
+    .image-counter {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      color: #65736f;
+      padding: 7px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      z-index: 1001;
+    }
   </style>
 </head>
 
@@ -260,126 +262,233 @@
     © My Illustration
   </footer>
 
+
+  <!-- 拡大表示 -->
+
   <div class="image-modal" id="imageModal">
-  <img id="modalImage" src="" alt="拡大表示">
-  <div class="image-counter" id="imageCounter">1 / 6</div>
-</div>
+
+    <img
+      id="modalImage"
+      src=""
+      alt="拡大表示"
+    >
+
+    <div
+      class="image-counter"
+      id="imageCounter"
+    >
+      1 / 6
+    </div>
+
+  </div>
+
 
   <script>
 
-  // ギャラリーの画像一覧
-  const images = [
-    "20260817.png",
-    "イラスト02.png",
-    "イラスト03.png",
-    "イラスト04.png",
-    "イラスト05.png",
-    "イラスト06.png"
-  ];
+    // =========================
+    // 画像一覧
+    // =========================
 
-  // 現在の画像番号
-  let currentIndex = 0;
-
-  // スワイプ開始位置
-  let startX = 0;
-  let startY = 0;
-
- const modal = document.getElementById("imageModal");
-const modalImage = document.getElementById("modalImage");
-const imageCounter = document.getElementById("imageCounter");
+    const images = [
+      "20260817.png",
+      "イラスト02.png",
+      "イラスト03.png",
+      "イラスト04.png",
+      "イラスト05.png",
+      "イラスト06.png"
+    ];
 
 
-  // 画像を開く
-  function openImage(index) {
+    // =========================
+    // 現在の画像
+    // =========================
 
-    currentIndex = index;
-
-    modalImage.src = images[currentIndex];
-imageCounter.textContent = (currentIndex + 1) + " / " + images.length;
-
-modal.style.display = "flex";
-  }
+    let currentIndex = 0;
 
 
-  // 画像を閉じる
-  function closeImage() {
+    // =========================
+    // スワイプ開始位置
+    // =========================
 
-    modal.style.display = "none";
-  }
-
-
-  // 背景をタップしたら閉じる
-  modal.addEventListener("click", function(event) {
-
-    if (event.target === modal) {
-      closeImage();
-    }
-
-  });
+    let startX = 0;
+    let startY = 0;
 
 
-  // スワイプ開始
-  modalImage.addEventListener("touchstart", function(event) {
+    // =========================
+    // HTMLの要素
+    // =========================
 
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
+    const modal =
+      document.getElementById("imageModal");
 
-  }, { passive: true });
+    const modalImage =
+      document.getElementById("modalImage");
 
-
-  // スワイプ終了
-  modalImage.addEventListener("touchend", function(event) {
-
-    const endX = event.changedTouches[0].clientX;
-    const endY = event.changedTouches[0].clientY;
-
-    const diffX = endX - startX;
-    const diffY = endY - startY;
+    const imageCounter =
+      document.getElementById("imageCounter");
 
 
-    // 横方向に50px以上動いたときだけスワイプ
-    if (
-      Math.abs(diffX) > 50 &&
-      Math.abs(diffX) > Math.abs(diffY)
-    ) {
+    // =========================
+    // 作品番号を更新
+    // =========================
 
+    function updateCounter() {
 
-      // 左スワイプ → 次の作品
-      if (diffX < 0) {
-
-        currentIndex++;
-
-        // 最後まで行ったら最初に戻る
-        if (currentIndex >= images.length) {
-          currentIndex = 0;
-        }
-
-      }
-
-
-      // 右スワイプ → 前の作品
-      else {
-
-        currentIndex--;
-
-        // 最初から右にスワイプしたら最後へ
-        if (currentIndex < 0) {
-          currentIndex = images.length - 1;
-        }
-
-      }
-
-
-      // 次の画像を表示
-      modalImage.src = images[currentIndex];
-imageCounter.textContent = (currentIndex + 1) + " / " + images.length;
+      imageCounter.textContent =
+        (currentIndex + 1) + " / " + images.length;
 
     }
 
-  }, { passive: true });
+
+    // =========================
+    // 画像を開く
+    // =========================
+
+    function openImage(index) {
+
+      currentIndex = index;
+
+      modalImage.src =
+        images[currentIndex];
+
+      updateCounter();
+
+      modal.style.display = "flex";
+
+    }
 
 
-</script>
+    // =========================
+    // 画像を閉じる
+    // =========================
+
+    function closeImage() {
+
+      modal.style.display = "none";
+
+    }
+
+
+    // =========================
+    // 背景をタップしたら閉じる
+    // =========================
+
+    modal.addEventListener(
+      "click",
+      function(event) {
+
+        if (event.target === modal) {
+
+          closeImage();
+
+        }
+
+      }
+    );
+
+
+    // =========================
+    // スワイプ開始
+    // =========================
+
+    modalImage.addEventListener(
+      "touchstart",
+      function(event) {
+
+        startX =
+          event.touches[0].clientX;
+
+        startY =
+          event.touches[0].clientY;
+
+      },
+      { passive: true }
+    );
+
+
+    // =========================
+    // スワイプ終了
+    // =========================
+
+    modalImage.addEventListener(
+      "touchend",
+      function(event) {
+
+        const endX =
+          event.changedTouches[0].clientX;
+
+        const endY =
+          event.changedTouches[0].clientY;
+
+        const diffX =
+          endX - startX;
+
+        const diffY =
+          endY - startY;
+
+
+        // 横方向のスワイプだけ反応
+        if (
+          Math.abs(diffX) > 50 &&
+          Math.abs(diffX) > Math.abs(diffY)
+        ) {
+
+
+          // =========================
+          // 左スワイプ
+          // 次の作品
+          // =========================
+
+          if (diffX < 0) {
+
+            currentIndex++;
+
+            if (
+              currentIndex >= images.length
+            ) {
+
+              currentIndex = 0;
+
+            }
+
+          }
+
+
+          // =========================
+          // 右スワイプ
+          // 前の作品
+          // =========================
+
+          else {
+
+            currentIndex--;
+
+            if (currentIndex < 0) {
+
+              currentIndex =
+                images.length - 1;
+
+            }
+
+          }
+
+
+          // =========================
+          // 画像と番号を更新
+          // =========================
+
+          modalImage.src =
+            images[currentIndex];
+
+          updateCounter();
+
+        }
+
+      },
+      { passive: true }
+    );
+
+  </script>
 
 </body>
 </html>
