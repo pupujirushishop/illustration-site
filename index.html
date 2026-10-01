@@ -256,6 +256,29 @@
       letter-spacing: 1px;
       z-index: 1001;
     }
+　　　.welcome {
+  position: relative;
+}
+
+.welcome-stamp {
+  position: absolute;
+  width: 100px;
+  height: auto;
+}
+
+/* 左のイラスト */
+.stamp-left {
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 右のイラスト */
+.stamp-right {
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
     
   </style>
 </head>
@@ -278,15 +301,17 @@
 
     <section class="welcome" id="home">
 
-　　<img class="welcome-stamp left" src="サイト用スタンプ①.png">
-　　<img class="welcome-stamp right" src="サイト用スタンプ②.png">
-
+　　　　<img class="welcome-stamp left" src="サイト用スタンプ①.png">
+      
       <h2>ぷぷんの癒しの世界へようこそ♪</h2>
 
       <p>
         ここではぷぷんのイラストを少しずつ紹介していくよ！！<br>
         是非ゆっくり見て行ってくださいね⭐︎
       </p>
+
+　　　　<img class="welcome-stamp right" src="サイト用スタンプ②.png">　
+      
     </section>
 
     <h2 class="gallery-title" id="gallery">
