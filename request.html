@@ -141,22 +141,24 @@
       line-height: 2;
     }
 
-    .contact-buttons {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .contact-buttons a {
-      display: inline-block;
-      margin: 6px;
-      padding: 12px 22px;
-      background: #ffffff;
-      color: #63aebf;
-      text-decoration: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 12px rgba(80, 170, 190, 0.15);
-      font-weight: bold;
-    }
+   .contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 25px;
+  flex-wrap: nowrap;
+}
+.contact-buttons a {
+  display: inline-block;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #63aebf;
+  text-decoration: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(80, 170, 190, 0.15);
+  font-weight: bold;
+  white-space: nowrap;
+}
 
     .contact-buttons a:hover {
       background: #fff3a8;
