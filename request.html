@@ -98,6 +98,43 @@
       color: #63b9cf;
       font-size: 20px;
     }
+    
+/* 制作イラスト紹介 */
+.portfolio {
+  margin-top: 35px;
+  padding: 20px;
+  background: #fffdf5;
+  border: 3px solid #fff0a8;
+  border-radius: 20px;
+}
+
+.portfolio h3 {
+  margin-top: 0;
+  text-align: center;
+  color: #63b9cf;
+}
+
+.portfolio-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.portfolio-images img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 3px 10px rgba(80, 170, 190, 0.15);
+}
+
+@media (max-width: 600px) {
+  .portfolio-images {
+    gap: 6px;
+  }
+}
+
 
     .request-box p {
       line-height: 2;
